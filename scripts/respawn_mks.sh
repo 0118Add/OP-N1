@@ -17,8 +17,8 @@ sed -i "s/^KERNEL_VERSION.*/KERNEL_VERSION=\"$KPV\"/" makeplus.env
 
 for F in *.sh ; do cp $F ${F%.sh}_plus.sh && cp $F ${F%.sh}_fol.sh;done
 find ./* -maxdepth 1 -path "*_plus.sh" | xargs -i sed -i 's/make\.env/makeplus\.env/g' {}
-find ./*_plus.sh ./*_fol.sh -maxdepth 1 -path "*" | xargs -i sed -i 's/OP_ROOT_TGZ=\"openwrt/OP_ROOT_TGZ=\"F-openwrt/g' {}
-find ./*_plus.sh ./*_fol.sh -maxdepth 1 -path "*" | xargs -i sed -i 's/TGT_IMG=\"\${WORK_DIR}\/openwrt/TGT_IMG=\"\${WORK_DIR}\/F-openwrt/g' {}
+find ./*_plus.sh ./*_fol.sh -maxdepth 1 -path "*" | xargs -i sed -i 's/OP_ROOT_TGZ=\"openwrt/OP_ROOT_TGZ=\"openwrt/g' {}
+find ./*_plus.sh ./*_fol.sh -maxdepth 1 -path "*" | xargs -i sed -i 's/TGT_IMG=\"\${WORK_DIR}\/openwrt/TGT_IMG=\"\${WORK_DIR}\/openwrt/g' {}
 echo "mk_files respawned."
 
 cd ..
