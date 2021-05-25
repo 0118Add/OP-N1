@@ -2,17 +2,12 @@ name: ARMv8_FOL
 
 on:
   repository_dispatch:
-#  release:
-#    types: published
-  push:
-    branches:
-      - master
-    paths:
-      - 'aarch64/ARMv8_FOL.config'
- # schedule:
-   # - cron: 0 16 * * *
- # watch:
-   # types: started
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -41,7 +36,7 @@ jobs:
     #  run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}开始编译
       
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@main
 
     - name: Initialization environment
       env:
@@ -134,14 +129,14 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: Upload bin directory
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: openwrt/bin/targets/*/*/bin.tar.gz
 
     - name: Upload firmware directory
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
@@ -154,7 +149,7 @@ jobs:
         name: R${{ env.DATE }}
         allowUpdates: true
         tag: ${{ env.FILE_NAME }}
-        commit: master
+        commit: main
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
           ARMv8系列设备打包用临时固件，不可直刷
