@@ -6,4 +6,4 @@
 #sudo wget https://github.com/HoldOnBro/Actions-OpenWrt/releases/download/Files4Compile/Armbian_20.10_Beikeyun_buster_5.4.73-flippy-47+o.img.xz
 #sudo wget https://github.com/HoldOnBro/Actions-OpenWrt/releases/download/Files4Compile/Armbian_20.10_L1-Pro_buster_5.4.73-flippy-47+o.img.xz
 
-wget $(curl -s https://api.github.com/repos/0118Add/Armv8-Actions-DB/releases/42673516 | grep browser_download_url | cut -d '"' -f 4)
+wget $(curl -s https://api.github.com/repos/0118Add/OP-N1/releases/43550904 | grep browser_download_url | cut -d '"' -f 4)
