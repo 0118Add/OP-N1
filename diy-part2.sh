@@ -19,8 +19,8 @@ sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
 
 #添加额外软件包
 rm -rf package/lean/luci-app-dockerman
-svn co https://github.com/Lienol/openwrt-packages/branches/19.07/utils/dockerd package/dockerd
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/utils/dockerd package/lean/dockerd
 #rm -rf package/lean/v2ray-plugin
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/v2ray-plugin package/v2ray-plugin
 #svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
