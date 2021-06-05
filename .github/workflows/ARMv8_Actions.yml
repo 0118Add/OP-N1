@@ -1,0 +1,207 @@
+name: ARMv8_FOL
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: aarch64/Armv8.config
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  MRG_ADD_SH: aarch64/ARMv8.sh
+  Update_Ver_SH: aarch64/autoVersion.sh
+  Get_Imgs_SH: aarch64/getImgs.sh
+  DOCKER_BUILD_SH: buildImage.sh
+#   SSH_ACTIONS: false
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: false
+  TZ: Asia/Shanghai
+  FILE_NAME: Files4Build
+  PRODUCT_NAME: ARMv8_FOL
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    #- name: WeChat notification
+    #  run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.FILE_NAME }}开始编译
+      
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-1804)
+        sudo -E apt-get -qq install rename
+        sudo -E apt-get -qq install time
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+
+    - name: Clone source code
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+        cd openwrt
+        useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
+        echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
+        echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+        echo "DATE1=$(date "+%Y-%m-%d")" >> $GITHUB_ENV
+#        echo "::set-env name=useVersionInfo::$useVersionInfo"
+#        echo "::set-env name=DATE::$(date "+%Y-%m-%d %H:%M:%S")"
+
+    #- name: Load custom feeds
+    #  run: |
+    #    [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+    #    chmod +x $DIY_P1_SH
+    #    cd openwrt
+    #    ../$DIY_P1_SH
+
+    - name: Update feeds
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
+
+    - name: Load custom configuration
+      run: |
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+#        sed -i 's/192.168.1.1/192.168.123.1/g' package/base-files/files/bin/config_generate
+#        sed -i 's/OpenWrt/MRG AutoBuild ${{ env.DATE1 }} @ OpenWrt/g' package/lean/default-settings/files/zzz-default-settings
+        
+#     - name: SSH connection to Actions
+#       uses: P3TERX/debugger-action@master
+#       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
+
+    - name: Download package
+      id: package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Compile the firmware
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        echo "::set-output name=status::success"
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        echo "DATE_YMD=_$(date +"%Y%m%d")" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+
+    - name: Build firmware
+      id: build
+      run: |
+        sudo mkdir /opt/kernel
+        cd /opt/kernel
+        chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
+        sudo $GITHUB_WORKSPACE/$Get_Imgs_SH
+        #sudo cp $GITHUB_WORKSPACE/BuildARMv8/* /opt/kernel/
+        #sudo cp $GITHUB_WORKSPACE/BuildARMv8/mk_*.tar.gz /opt/
+        #sudo tar xvzf mk_*.tar.gz
+        cd /opt
+        sudo cp $GITHUB_WORKSPACE/scripts/patches/*.patch ./
+        sudo cp $GITHUB_WORKSPACE/scripts/respawn_mks.sh ./
+        sudo git clone https://github.com/unifreq/openwrt_packit openwrt
+        sudo cp $GITHUB_WORKSPACE/scripts/whoami ./openwrt/
+        sudo chmod +x ./respawn_mks.sh
+        sudo ./respawn_mks.sh
+        sudo cp /workdir/openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz /opt/openwrt
+        cd /opt/openwrt
+        chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
+        sudo $GITHUB_WORKSPACE/$Update_Ver_SH
+        sudo ./mk_rk3328_beikeyun.sh
+        #sudo ./mk_rk3328_beikeyun_fol.sh
+        sudo ./mk_rk3328_beikeyun_plus.sh
+        sudo ./mk_rk3328_l1pro.sh
+        #sudo ./mk_rk3328_l1pro_fol.sh
+        sudo ./mk_rk3328_l1pro_plus.sh
+        sudo ./mk_s905d_n1.sh
+        #sudo ./mk_s905d_n1_fol.sh
+        sudo ./mk_s905d_n1_plus.sh
+        sudo ./mk_s905x2_x96max.sh
+        #sudo ./mk_s905x2_x96max_fol.sh
+        sudo ./mk_s905x2_x96max_plus.sh
+        sudo ./mk_s905x3_multi.sh
+        #sudo ./mk_s905x3_multi_fol.sh
+        sudo ./mk_s905x3_multi_plus.sh
+        sudo ./mk_s912_zyxq.sh
+        #sudo ./mk_s912_zyxq_fol.sh
+        sudo ./mk_s912_zyxq_plus.sh
+        sudo ./mk_s922x_gtking.sh
+        #sudo ./mk_s922x_gtking_fol.sh
+        sudo ./mk_s922x_gtking_plus.sh
+        sudo ./mk_h6_vplus.sh
+        #sudo ./mk_h6_vplus_fol.sh
+        sudo ./mk_h6_vplus_plus.sh
+        sudo cp ./files/update*.sh ./tmp/
+        echo "::set-output name=status::success"    
+    
+    - name: Organize files
+      id: organize
+      if: steps.build.outputs.status == 'success' && !cancelled()
+      run: |
+        cd /opt/openwrt/tmp/
+        pigz -6 -p $(nproc) *.img
+        rename 's/openwrt/openwrt/' openwrt*gz
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+
+    - name: Upload bin directory
+      uses: actions/upload-artifact@main
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
+      with:
+        name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: openwrt/bin/targets/*/*/bin.tar.gz
+
+    - name: Upload firmware directory
+      uses: actions/upload-artifact@main
+      if: env.UPLOAD_FIRMWARE == 'true' && steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        path: ${{ env.FIRMWARE }}
+
+    - name: Create release
+      id: release
+      uses: ncipollo/release-action@v1
+      with:
+        name: R${{ env.DATE }}
+        allowUpdates: true
+        tag: ${{ env.FILE_NAME }}
+        commit: main
+        token: ${{ secrets.RELEASES_TOKEN }}
+        body: |
+          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
+          ${{ env.useVersionInfo }}
+        artifacts: ${{ env.FIRMWARE }}/*
+    
+    - name: WeChat notification
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}编译完成
