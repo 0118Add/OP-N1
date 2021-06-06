@@ -19,10 +19,10 @@ sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
 
 #添加额外软件包
 #rm -rf package/lean/luci-app-dockerman
-git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
-#git clone https://github.com/lisaac/luci-app-dockerman.git package/lean/luci-app-dockerman
-#svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/utils/docker package/lean/docker
-#svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/utils/dockerd package/lean/dockerd
+#git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
+git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+#svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/utils/docker package/docker
+#svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/utils/dockerd package/dockerd
 #rm -rf package/lean/v2ray-plugin
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/v2ray-plugin package/v2ray-plugin
 #svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
@@ -71,6 +71,8 @@ cp $GITHUB_WORKSPACE/general/coremark.sh package/lean/coremark/
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-flowoffload/po/zh-cn/flowoffload.po
 sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-sfe/po/zh-cn/sfe.po
 #sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' package/lean/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
+
+sed -i ':a;N;s|+docker \\\n\t+dockerd|+docker-ce|g;ta' package/luci-app-dockerman/Makefile
 
 #赋予koolddns权限
 #chmod 0755 package/openwrt-packages/luci-app-koolddns/root/etc/init.d/koolddns
