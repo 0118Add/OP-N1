@@ -13,4 +13,3 @@
 
 # Add a feed source
 #sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
-sed -i '$a src-git immortalwrt https://github.com/immortalwrt/packages.git;openwrt-18.06' feeds.conf.default
