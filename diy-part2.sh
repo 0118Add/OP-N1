@@ -32,8 +32,8 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus package/t
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/dns2socks package/dns2socks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ipt2socks package/ipt2socks
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/microsocks package/microsocks 
-svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
+#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/microsocks package/microsocks 
+#svn co https://github.com/xiaorouji/openwrt-passwall/trunk/pdnsd-alt package/pdnsd-alt
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
 git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray-core package/xray-core
