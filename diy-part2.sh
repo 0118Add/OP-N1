@@ -12,7 +12,8 @@
 sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_generate
 
 #使用源码自带ShadowSocksR Plus+出国软件
-sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+#sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.default
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
