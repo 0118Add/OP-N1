@@ -5,7 +5,7 @@
 # Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
 #========================================================================================================================
 
-name: Build OpenWrt for Armvirt
+name: OpenWrt for Armvirt
 
 on:
   repository_dispatch:
@@ -151,6 +151,7 @@ jobs:
         WHOAMI: jack@archlinux
         KERNEL_REPO_URL: https://github.com/breakings/OpenWrt/trunk/opt/kernel
         KERNEL_VERSION_NAME: 5.4.136_5.13.6
+        KERNEL_AUTO_LATEST: true
         OPENWRT_VER: R21.7.26
         ENABLE_WIFI_K504: 0
         ENABLE_WIFI_K510: 0
