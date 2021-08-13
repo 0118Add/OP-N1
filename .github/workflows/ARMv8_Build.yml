@@ -73,8 +73,9 @@ jobs:
       run: |
         sudo mkdir /opt/kernel
         cd /opt/kernel
-        chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
-        sudo $GITHUB_WORKSPACE/$Get_Imgs_SH
+        sudo git clone https://github.com/breakings/OpenWrt/trunk/opt/kernel
+        #chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
+        #sudo $GITHUB_WORKSPACE/$Get_Imgs_SH
         #sudo cp $GITHUB_WORKSPACE/BuildARMv8/* /opt/kernel/
         #sudo cp $GITHUB_WORKSPACE/BuildARMv8/mk_*.tar.gz /opt/
         #sudo tar xvzf mk_*.tar.gz
