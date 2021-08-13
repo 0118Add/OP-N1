@@ -73,6 +73,7 @@ jobs:
       run: |
         sudo mkdir /opt/kernel
         cd /opt/kernel
+        chmod +x git clone https://github.com/breakings/OpenWrt/tree/main/opt/kernel
         sudo git clone https://github.com/breakings/OpenWrt/tree/main/opt/kernel
         #chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
         #sudo $GITHUB_WORKSPACE/$Get_Imgs_SH
