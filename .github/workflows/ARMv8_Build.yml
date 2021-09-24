@@ -169,6 +169,8 @@ jobs:
 
         artifacts: ${{ env.FIRMWARE }}/*
     
-#    - name: WeChat notification
-#      if: steps.organize.outputs.status == 'success' && !cancelled()
-#      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}打包完成
+    - name: Delete workflow runs
+      uses: GitRML/delete-workflow-runs@main
+      with:
+        retain_days: 1
+        keep_minimum_runs: 3
