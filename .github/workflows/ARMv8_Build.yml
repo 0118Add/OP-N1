@@ -71,6 +71,7 @@ jobs:
     - name: Build firmware
       id: build
       run: |
+        echo $PWD
         sudo mkdir /opt/kernel
         cd /opt/kernel
         chmod +x $GITHUB_WORKSPACE/$Get_Imgs_SH
@@ -89,6 +90,7 @@ jobs:
         sudo wget $(curl -s https://api.github.com/repos/0118Add/OP-N1/releases/46483088 | grep browser_download_url | cut -d '"' -f 4)
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
+        sudo cp $GITHUB_WORKSPACE/scripts/whoami ./
         sudo ./mk_rk3328_beikeyun.sh
         #sudo ./mk_rk3328_beikeyun_fol.sh
         sudo ./mk_rk3328_beikeyun_plus.sh
