@@ -1,18 +1,8 @@
+#!/bin/bash
+
 cd openwrt
-sed -i '10,15 s/\(#\)\(.*\)/\2/' make.env
-OLD=$(grep \+o\" make.env)
-NEWP=$(grep 5\.10.*\+\" make.env)
-NEWPP=$(grep 5\.12.*\+\" make.env)
-#echo $OLD
-#echo $NEW
 cp make.env makeplus.env
 cp make.env makeplusplus.env
-sed -i "s/$NEWP/#$NEWP/" make.env
-sed -i "s/$NEWPP/#$NEWPP/" make.env
-sed -i "s/$OLD/#$OLD/" makeplus.env
-sed -i "s/$NEWPP/#$NEWPP/" makeplus.env
-sed -i "s/$OLD/#$OLD/" makeplusplus.env
-sed -i "s/$NEWP/#$NEWP/" makeplusplus.env
 
 #sync the kernel version
 KV=$(find /opt/kernel/ -name "boot*+o.tar.gz" | awk -F '[-.]' '{print $2"."$3"."$4"-"$5"-"$6}')
