@@ -120,15 +120,15 @@ jobs:
         #sudo ./mk_h6_vplus_fol.sh
         sudo ./mk_h6_vplus_plus.sh
         sudo ./mk_h6_vplus_plusplus.sh
-        sudo cp ./*AllPackages.tar.gz ./tmp/
-        sudo cp ./files/update*.sh ./tmp/
+        sudo cp ./*AllPackages.tar.gz ./output/
+        sudo cp ./files/update*.sh ./output/
         echo "::set-output name=status::success"
 
     - name: Organize files
       id: organize
       if: steps.build.outputs.status == 'success' && !cancelled()
       run: |
-        cd /opt/openwrt/tmp/
+        cd /opt/openwrt/output/
         pigz -6 -p $(nproc) *.img
         rename 's/openwrt/openwrt/' openwrt*gz
 
