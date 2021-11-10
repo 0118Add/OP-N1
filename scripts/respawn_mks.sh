@@ -35,5 +35,5 @@ patch -p1 < update-amlogic-openwrt-old.sh.patch
 patch -p1 < update-amlogic-openwrt.sh.patch
 patch -p1 < update-beikeyun-openwrt.sh.patch
 patch -p1 < update-vplus-openwrt.sh.patch
-patch -p1 < update-l1pro-openwrt.sh.patch
+#patch -p1 < update-l1pro-openwrt.sh.patch
 echo "patching done."
