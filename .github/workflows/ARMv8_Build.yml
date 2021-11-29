@@ -115,10 +115,10 @@ jobs:
         #sudo ./mk_s922x_gtking.sh
         #sudo ./mk_s922x_gtking_plus.sh
         #sudo ./mk_s922x_gtking_plusplus.sh
-        sudo ./mk_s922x_odroid-n2.sh
-        sudo ./mk_s922x_odroid-n2_plus.sh
-        sudo ./mk_s922x_odroid-n2_plusplus.sh
-        sudo ./mk_s922x_odroid-n2_plusplusplus.sh
+        #sudo ./mk_s922x_odroid-n2.sh
+        #sudo ./mk_s922x_odroid-n2_plus.sh
+        #sudo ./mk_s922x_odroid-n2_plusplus.sh
+        #sudo ./mk_s922x_odroid-n2_plusplusplus.sh
         sudo ./mk_h6_vplus.sh
         sudo ./mk_h6_vplus_plus.sh
         sudo ./mk_h6_vplus_plusplus.sh
