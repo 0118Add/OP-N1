@@ -15,17 +15,21 @@ cd /home/xyz/lede/package/OpenAppFilter && git pull
 cd /home/xyz/lede/package/luci-app-jd-dailybonus && git pull
 cd /home/xyz/lede/package/luci-app-ttnode && git pull
 cd /home/xyz/lede/package/luci-app-adguardhome && git pull
-cd /home/xyz/lede/package/luci-app-dockerman && git pull
 cd /home/xyz/lede/package/luci-app-serverchan && git pull
 cd /home/xyz/lede/package/luci-theme-opentomcat && git pull
 cd /home/xyz/lede/package/luci-theme-atmaterial && git pull
 cd /home/xyz/lede/package/luci-app-koolddns && git pull
 cd /home/xyz/lede/package/luci-app-autoipsetadder && git pull
-cd /home/xyz/lede/package/luci-app-dnsfilter && git pull
-cd /home/xyz/lede/package/luci-app-godproxy && git pull
+#cd /home/xyz/lede/package/luci-app-dnsfilter && git pull
+cd /home/xyz/lede/package/luci-app-ikoolproxy && git pull
 cd /home/xyz/lede/package/luci-app-advanced && git pull
 cd /home/xyz/lede/package/luci-app-argon-config && git pull
 cd /home/xyz/lede/package/luci-theme-argon && git pull
+cd /home/xyz/lede/package/luci-app-adblock-plus && git pull
+cd /home/xyz/lede/package/luci-app-dogcom && git pull
+cd /home/xyz/lede/package/openwrt-dogcom && git pull
+
+#cd /home/xyz/lede/luci-app-wrtbwmon && git pull
 cd /home/xyz/sub-web && git pull
 
 sed -i "/module\.exports\ =\ {/a\ \ publicPath:\ \ \'\.\/\'\," /home/xyz/sub-web/vue.config.js
@@ -38,11 +42,13 @@ rm -rf /home/xyz/lede/package/smartdns
 rm -rf /home/xyz/lede/package/wrtbwmon
 rm -rf /home/xyz/lede/package/luci-app-bypass
 rm -rf /home/xyz/lede/package/lean/luci-app-wrtbwmon
+#rm -rf /home/xyz/lede/package/luci-app-wrtbwmon
 rm -rf /home/xyz/lede/package/luci-theme-rosy
 #rm -rf /home/xyz/lede/package/luci-theme-purple
 rm -rf /home/xyz/lede/package/luci-theme-darkmatter
 rm -rf /home/xyz/lede/package/luci-theme-opentomato
 rm -rf /home/xyz/lede/package/luci-theme-edge
+rm -rf /home/xyz/lede/package/lean/luci-theme-argon
 #rm -rf /home/xyz/lede/package/luci-theme-argon_new
 rm -rf /home/xyz/lede/package/luci-app-openclash
 rm -rf /home/xyz/lede/package/brook
@@ -61,11 +67,13 @@ rm -rf /home/xyz/lede/package/gost
 rm -rf /home/xyz/lede/package/luci-app-ssr-plus
 rm -rf /home/xyz/lede/package/naiveproxy
 rm -rf /home/xyz/lede/package/ssocks
+rm -rf /home/xyz/lede/package/hysteria
 rm -rf /home/xyz/lede/package/xray-core
 rm -rf /home/xyz/lede/package/r8125-mod
 rm -rf /home/xyz/lede/package/xray-plugin
 #rm -rf /home/xyz/lede/package/subweb
 rm -rf /home/xyz/lede/package/subconverter
+rm -rf /home/xyz/lede/package/toml11
 rm -rf /home/xyz/lede/package/jpcre2
 rm -rf /home/xyz/lede/package/rapidjson
 rm -rf /home/xyz/lede/package/luci-app-unblockneteasemusic-mini
@@ -73,21 +81,31 @@ rm -rf /home/xyz/lede/package/luci-app-socat
 rm -rf /home/xyz/lede/package/ddnsto
 rm -rf /home/xyz/lede/package/luci-app-ddnsto
 rm -rf /home/xyz/lede/package/shadowsocks-rust
+rm -rf /home/xyz/lede/package/shadowsocksr-libev
 rm -rf /home/xyz/lede/package/v2ray-plugin
-rm -rf /home/xyz/lede/package/smartdns-le
+rm -rf /home/xyz/lede/package/v2ray-core
+rm -rf /home/xyz/lede/package/simple-obfs
+rm -rf /home/xyz/lede/package/trojan
+#rm -rf /home/xyz/lede/package/smartdns-le
 rm -rf /home/xyz/lede/package/quickjspp
 rm -rf /home/xyz/lede/package/libcron
 rm -rf /home/xyz/lede/package/smartdns
 rm -rf /home/xyz/lede/feeds/packages/net/smartdns
-rm -rf /home/xyz/lede/package/udp2raw-tunnel
+rm -rf /home/xyz/lede/package/udp2raw
 rm -rf /home/xyz/lede/package/luci-app-udp2raw
+rm -rf /home/xyz/lede/package/luci-app-amlogic
+rm -rf /home/xyz/lede/package/luci-app-dockerman
 
+svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman /home/xyz/lede/package/luci-app-dockerman
+#cp -r /home/xyz/lede/luci-app-wrtbwmon/luci-app-wrtbwmon /home/xyz/lede/package/
 svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon /home/xyz/lede/package/wrtbwmon
 #rm -rf /home/xyz/lede/package/luci-app-ksmbd
-git clone https://github.com/garypang13/luci-app-bypass /home/xyz/lede/package/luci-app-bypass
-find /home/xyz/lede/package/*/ /home/xyz/lede/feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
-find /home/xyz/lede/package/*/ /home/xyz/lede/feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
-find /home/xyz/lede/package/luci-app-bypass/* -maxdepth 8 -path "*" | xargs -i sed -i 's/smartdns-le/smartdns/g' {}
+svn co https://github.com/kiddin9/openwrt-bypass/trunk/luci-app-bypass /home/xyz/lede/package/luci-app-bypass
+find /home/xyz/lede/package/*/ /home/xyz/lede/feeds/*/ -maxdepth 2 -path "*luci-app-vssr/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-alt/shadowsocksr-libev-ssr-redir/g' {}
+find /home/xyz/lede/package/*/ /home/xyz/lede/feeds/*/ -maxdepth 2 -path "*luci-app-vssr/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-server/shadowsocksr-libev-ssr-server/g' {}
+#find /home/xyz/lede/package/*/ /home/xyz/lede/feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
+#find /home/xyz/lede/package/*/ /home/xyz/lede/feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
+#find /home/xyz/lede/package/luci-app-bypass/* -maxdepth 8 -path "*" | xargs -i sed -i 's/smartdns-le/smartdns/g' {}
 svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy /home/xyz/lede/package/luci-theme-rosy
 #svn co https://github.com/rosywrt/luci-theme-purple/trunk/luci-theme-purple /home/xyz/lede/package/luci-theme-purple
 svn co https://github.com/apollo-ng/luci-theme-darkmatter/trunk/luci/themes/luci-theme-darkmatter /home/xyz/lede/package/luci-theme-darkmatter
@@ -102,10 +120,15 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go /home/xyz/l
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-plus /home/xyz/lede/package/trojan-plus
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall /home/xyz/lede/package/luci-app-passwall
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks /home/xyz/lede/package/ssocks
+svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria /home/xyz/lede/package/hysteria
 svn co https://github.com/fw876/helloworld/trunk/xray-core /home/xyz/lede/package/xray-core
 svn co https://github.com/fw876/helloworld/trunk/xray-plugin /home/xyz/lede/package/xray-plugin
 svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust /home/xyz/lede/package/shadowsocks-rust
+svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev /home/xyz/lede/package/shadowsocksr-libev
 svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin /home/xyz/lede/package/v2ray-plugin
+svn co https://github.com/fw876/helloworld/trunk/v2ray-core /home/xyz/lede/package/v2ray-core
+svn co https://github.com/fw876/helloworld/trunk/simple-obfs /home/xyz/lede/package/simple-obfs
+svn co https://github.com/fw876/helloworld/trunk/trojan /home/xyz/lede/package/trojan
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray-core /home/xyz/lede/package/xray-core
 
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos /home/xyz/lede/package/luci-app-eqos
@@ -113,6 +136,23 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-eqos /home/xyz
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost /home/xyz/lede/package/gost
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus /home/xyz/lede/package/luci-app-ssr-plus
 svn co https://github.com/fw876/helloworld/trunk/naiveproxy /home/xyz/lede/package/naiveproxy
+
+#添加luci-app-amlogic
+svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic /home/xyz/lede/package/luci-app-amlogic
+
+#修改晶晨宝盒默认配置
+
+# 1.Set the download repository of the OpenWrt files to your github.com
+sed -i "s|https.*/OpenWrt|https://github.com/HoldOnBro/Actions-OpenWrt|g" /home/xyz/lede/package/luci-app-amlogic/root/etc/config/amlogic
+
+# 2.Set the keywords of Tags in your github.com Releases
+#sed -i "s|ARMv8|ARMv8|g" /home/xyz/lede/package/luci-app-amlogic/root/etc/config/amlogic
+
+# 3.Set the suffix of the OPENWRT files in your github.com Releases
+sed -i "s|.img.gz|+_FOL+SFE.img.gz|g" /home/xyz/lede/package/luci-app-amlogic/root/etc/config/amlogic
+
+# 4.Set the download path of the kernel in your github.com repository
+sed -i "s|opt/kernel|BuildARMv8|g" /home/xyz/lede/package/luci-app-amlogic/root/etc/config/amlogic
 
 #svn co https://github.com/HoldOnBro/Actions-OpenWrt/trunk/x86_64/r8125-mod /home/xyz/lede/package/r8125-mod
 
@@ -131,11 +171,12 @@ svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/l
 svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/gost /home/xyz/lede/package/gost
 svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-unblockneteasemusic-mini /home/xyz/lede/package/luci-app-unblockneteasemusic-mini
 svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/subconverter /home/xyz/lede/package/subconverter
-svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/udp2raw-tunnel /home/xyz/lede/package/udp2raw-tunnel
+svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/libs/toml11 /home/xyz/lede/package/toml11
+svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/udp2raw /home/xyz/lede/package/udp2raw
 svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-udp2raw /home/xyz/lede/package/luci-app-udp2raw
-svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-smartdns /home/xyz/lede/package/luci-app-smartdns
+svn co https://github.com/immortalwrt/luci/branches/openwrt-18.06/applications/luci-app-smartdns /home/xyz/lede/package/luci-app-smartdns
 svn co https://github.com/kenzok8/openwrt-packages/trunk/smartdns /home/xyz/lede/package/smartdns
-svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le /home/xyz/lede/package/smartdns-le
+#svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le /home/xyz/lede/package/smartdns-le
 #svn co https://github.com/openwrt/luci/trunk/applications/luci-app-ksmbd /home/xyz/lede/package/luci-app-ksmbd
 chmod 0755 /home/xyz/lede/package/luci-app-koolddns/root/etc/init.d/koolddns
 chmod 0755 /home/xyz/lede/package/luci-app-koolddns/root/usr/share/koolddns/aliddns
