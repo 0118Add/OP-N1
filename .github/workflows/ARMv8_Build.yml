@@ -125,10 +125,9 @@ jobs:
       id: organize
       if: steps.build.outputs.status == 'success' && !cancelled()
       run: |
-        cd /opt/openwrt/output/
+        cd /opt/openwrt_packit/output
         pigz -6 -p $(nproc) *.img
-        rename 's/openwrt/openwrt/' openwrt*gz
-
+        
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "::set-output name=status::success"
 
