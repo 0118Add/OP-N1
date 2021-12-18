@@ -80,12 +80,12 @@ jobs:
         #sudo cp $GITHUB_WORKSPACE/BuildARMv8/mk_*.tar.gz /opt/
         #sudo tar xvzf mk_*.tar.gz
         cd /opt
-        sudo cp $GITHUB_WORKSPACE/scripts/patches/*.patch ./
+        #sudo cp $GITHUB_WORKSPACE/scripts/patches/*.patch ./
         sudo cp $GITHUB_WORKSPACE/scripts/respawn_mks.sh ./
-        sudo git clone https://github.com/unifreq/openwrt_packit openwrt
+        sudo git clone https://github.com/unifreq/openwrt_packit
         sudo chmod +x ./respawn_mks.sh
         sudo ./respawn_mks.sh
-        cd /opt/openwrt
+        cd /opt/openwrt_packit
         sudo wget $(curl -s https://api.github.com/repos/0118Add/OP-N1/releases/46483088 | grep browser_download_url | cut -d '"' -f 4)
         chmod +x $GITHUB_WORKSPACE/$Update_Ver_SH
         sudo $GITHUB_WORKSPACE/$Update_Ver_SH
