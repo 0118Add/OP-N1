@@ -161,13 +161,7 @@ jobs:
         body: |
           默认IP：192.168.1.10 默认密码： password
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
-
-          升级降级方法为：
-              1. 把 update-amlogic-openwrt.sh 及 img镜像上传至  /mnt/mmcblk2p4
-              2. cd    /mnt/mmcblk2p4
-              3. chmod   755  update-amlogic-openwrt.sh
-              4. ./update-amlogic-openwrt.sh    xxxxx.img
-
+        
         artifacts: ${{ env.FIRMWARE }}/*
     
     - name: Delete workflow runs
