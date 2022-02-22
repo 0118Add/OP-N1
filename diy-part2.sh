@@ -87,7 +87,7 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #curl -fsSL https://raw.githubusercontent.com/0118Add/OP-N1/main/autocore/files/arm/index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 # Add autocore support for x86
-rm -f package/lean/autocore
+rm -f feeds/package/lean/autocore
 svn co https://github.com/0118Add/OP-N1/trunk/autocore package/lean/autocore
 #wget -O ./package/lean/autocore/Makefile https://raw.githubusercontent.com/0118Add/OP-N1/main/autocore/Makefile
 
