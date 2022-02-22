@@ -88,7 +88,7 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 
 # Add autocore support for x86
 rm -f package/lean/autocore
-svn co https://github.com/0118Add/OpenWrt-CI/trunk/x86/autocore package/lean/autocore
+svn co https://github.com/0118Add/OP-N1/trunk/autocore package/lean/autocore
 #wget -O ./package/lean/autocore/Makefile https://raw.githubusercontent.com/0118Add/OP-N1/main/autocore/Makefile
 
 # 添加旁路由防火墙
