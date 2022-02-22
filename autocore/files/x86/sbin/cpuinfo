@@ -1,0 +1,4 @@
+#!/bin/sh
+
+MHz=`grep 'MHz' /proc/cpuinfo | cut -c11- |sed -n '1p'`
+printf "%.0f MHz" $MHz
