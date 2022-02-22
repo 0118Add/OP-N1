@@ -84,7 +84,7 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #sed -i 's/services/system/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
 # 修改系统文件
-curl -fsSL https://raw.githubusercontent.com/0118Add/OP-N1/main/autocore/files/arm/index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+#curl -fsSL https://raw.githubusercontent.com/0118Add/OP-N1/main/autocore/files/arm/index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 # Add autocore support for armvirt
 #sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
