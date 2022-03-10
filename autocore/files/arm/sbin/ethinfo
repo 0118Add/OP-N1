@@ -36,7 +36,6 @@ do
 	echo -n "$h \"$c\", \"status\": $l, \"speed\": \"$f\", \"duplex\": $x,\"mac\": \"$m\"}," >> /tmp/state/ethinfo
 
 
-
 done
 
 sed -i 's/.$//' /tmp/state/ethinfo
