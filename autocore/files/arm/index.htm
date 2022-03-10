@@ -31,16 +31,13 @@
 		buffered = 0,
 		shared = 0
 	}
-	
-	local mem_cached = luci.sys.exec("sed -e '/^Cached: /!d; s#Cached: *##; s# kB##g' /proc/meminfo")
-
+                   local mem_cached = luci.sys.exec("sed -e '/^Cached: /!d; s#Cached: *##; s# kB##g' /proc/meminfo")
 	local swapinfo = sysinfo.swap or {
 		total = 0,
 		free = 0
 	}
 
 	local has_dsl = fs.access("/etc/init.d/dsl_control")
-
 	if luci.http.formvalue("status") == "1" then
 		local ntm = require "luci.model.network".init()
 		local wan = ntm:get_wannet()
@@ -63,10 +60,10 @@
 
 		local up_time = luci.sys.exec("uptime")
 		local rv = {
-			cpuusage   = cpu_usage,
+			cpuusage    = cpu_usage,
 			cpuwd    = cpu_wd,
 			ethinfo    = eth_info,
-			userinfo   = user_info,
+			userinfo    = user_info,
 			uptime     = up_time or 0,
 			localtime  = os.date("%Y年%m月%d日") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X"),
 			loadavg    = sysinfo.load or { 0, 0, 0 },
@@ -94,6 +91,7 @@
 			}
 		end
 
+	
 		if wan6 then
 			rv.wan6 = {
 				ip6addr   = wan6:ip6addr(),
@@ -654,7 +652,8 @@
 			<% end %>
 
 			var e;
-
+			
+			
 			if (e = document.getElementById('ethinfo'))			{
 				var ports = eval('(' + info.ethinfo + ')');
 				var tmp = "";
@@ -666,6 +665,8 @@
 							ports[i].speed,
 						    ports[i].duplex ? '<%:full-duplex%>' : '<%:half-duplex%>',
 							ports[i].mac);
+
+
 				};
 				e.innerHTML = "<tr>" + tmp + "</tr>";
 			}
@@ -746,12 +747,16 @@
 
 	<table width="100%" cellspacing="10">
 		<tr><td width="33%"><%:Hostname%></td><td><%=luci.sys.hostname() or "?"%></td></tr>
-		<tr><td width="33%"><%:机器型号%></td><td><%="JITU-Y1"%></td></tr>
+		<tr><td width="33%"><%:机器型号%></td><td><%=pcdata(boardinfo.model or "?")%> <%=luci.sys.exec("cat /etc/bench.log |awk -F '.' '{print $1}'") or " "%></td></tr>
 		<tr><td width="33%"><%:机器主频%></td><td > <%=luci.sys.exec("cpuinfo |  awk -F '.' '{print $1}'" or "ARM Processor x 0 (288 MHz)")%></td></tr>
 		<tr><td width="33%"><%:CPU温度%></td><td id="cpuwd">-</td></tr>
 		<tr><td width="33%"><%:CPU负载%></td><td id="cpuusage">-</td></tr>
         <tr><td width="33%"><%:RAM Size%></td><td > <%=luci.sys.exec("free -m  | grep Mem | awk '{print $2/1024}'|  awk -F '.' '{print $1}'").."MB"%></td></tr>
-		<tr><td width="33%"><%:Firmware Version%></td><td><%="JITU-TikTok-Y1.0"%></td></tr>
+
+		<tr><td width="33%"><%:Firmware Version%></td><td>
+			<%=pcdata(ver.distname)%> <%=pcdata(ver.distversion)%> /
+			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>)
+		</td></tr>
 		<tr><td width="33%"><%:Kernel Version%></td><td><%=unameinfo.release or "?"%></td></tr>
 		<tr><td width="33%"><%:Local Time%></td><td id="localtime">-</td></tr>
 		<tr><td width="33%"><%:Uptime%></td><td id="uptime">-</td></tr>
@@ -759,7 +764,6 @@
 
 </table>
 </fieldset>
-
 
 <fieldset class="cbi-section">
 	<legend><%:Memory%></legend>
@@ -769,7 +773,6 @@
 		<tr><td width="33%"><%:Buffered%></td><td id="membuff">-</td></tr>
 	</table>
 </fieldset>
-
 <% if swapinfo.total > 0 then %>
 <fieldset class="cbi-section">
 	<legend><%:Swap%></legend>
@@ -780,12 +783,16 @@
 	</table>
 </fieldset>
 <% end %>
+
+<% if not has_switch then %>
 <fieldset class="cbi-section">
 	<legend><%:Interfaces%></legend>
 
 	<table width="100%" cellspacing="10" id="ethinfo">
 	</table>
 </fieldset>
+<% end %>
+
 <fieldset class="cbi-section">
 	<legend><%:Network%></legend>
 
@@ -867,6 +874,7 @@
 		<tr><td><em><%:Collecting data...%></em></td></tr>
 	</table>
 </fieldset>
+
 <fieldset class="cbi-section">
 	<legend><%:Associated Stations%></legend>
 
@@ -885,6 +893,8 @@
 	</table>
 </fieldset>
 <% end %>
+
+
 
 <%-
 	local incdir = util.libpath() .. "/view/admin_status/index/"
