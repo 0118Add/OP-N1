@@ -94,7 +94,6 @@ rm -f feeds/package/lean/autocore
 rm -f feeds/package/lean/default-settings
 svn co https://github.com/0118Add/OP-N1/trunk/autocore package/lean/autocore
 svn co https://github.com/0118Add/OP-N1/trunk/default-settings package/lean/default-settings
-#wget -O ./package/lean/autocore/Makefile https://raw.githubusercontent.com/0118Add/OP-N1/main/autocore/Makefile
 
 # 添加旁路由防火墙
 echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/config/firewall/files/firewall.user
