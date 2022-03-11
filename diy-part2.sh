@@ -98,6 +98,9 @@ wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/
 #sed -i 's/^\s*$[(]call\sEnsureVendoredVersion/#&/' feeds/packages/utils/dockerd/Makefile
 sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 
+#内核替换 kernel 5.4.183
+sed -i 's/LINUX_KERNEL_HASH-5.4.175 = ac901bdffb1488d6c730ca7ab42322163dd331b240e2f06ad83d199e251a4840/LINUX_KERNEL_HASH-5.4.183 = 2d4b0b77644835410b2a5f599b2893fe199d5542615684207f579753020cc99c/g' ./include/kernel-5.4
+sed -i 's/LINUX_VERSION-5.4 = .175/LINUX_VERSION-5.4 = .183/g' ./include/kernel-5.4
 # runc
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.2/g' feeds/packages/utils/runc/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=6c3cca4bbeb5d9b2f5e3c0c401c9d27bc8a5d2a0db8a2f6a06efd03ad3c38a33/g' feeds/packages/utils/runc/Makefile
