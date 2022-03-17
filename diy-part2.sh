@@ -50,8 +50,7 @@ git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dock
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
 git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
-#rm -rf package/lean/luci-theme-argon
-#git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
+rm -rf feeds/luci/themes/luci-theme-argon
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 #git clone https://github.com/leshanydy2022/luci-theme-bootstrap-mod.git package/luci-theme-bootstrap-mod
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
