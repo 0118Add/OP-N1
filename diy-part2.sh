@@ -21,7 +21,7 @@ sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/l
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
 #添加额外软件包
-rm -f feeds/package/lean/autocore
+rm -rf package/lean/autocore
 svn co https://github.com/0118Add/OpenWrt-CI/trunk/x86/autocore package/lean/autocore
 rm -rf feeds/luci/collections/luci-lib-docker
 rm -rf feeds/luci/applications/luci-app-dockerman
