@@ -15,7 +15,7 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 #sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
 #sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.default
 git clone https://github.com/fw876/helloworld.git package/helloworld
-sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
+#sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
@@ -102,7 +102,7 @@ sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-f
 echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/config/firewall/files/firewall.user
 
 # 替换index.htm文件
-wget -O ./package/lean/autocore/files/arm/index.htm https://raw.githubusercontent.com/0118Add/OP-N1/main/aarch64/n1_index.htm
+wget -O ./package/lean/autocore/files/arm/index.htm https://raw.githubusercontent.com/0118Add/OP-N1/main/n1_index.htm
 
 # 替换banner
 wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/Armbian/main/router/Openwrt_N1/diy/n1_lede/banner
