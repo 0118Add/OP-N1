@@ -754,7 +754,7 @@
 		<tr><td width="33%"><%:CPU Temperature%></td><td><%=luci.sys.exec("/sbin/tempinfo")%></td></tr>
 		<% end %>
 		<tr><td width="33%"><%:CPU负载%></td><td id="cpuusage">-</td></tr>
-        <tr><td width="33%"><%:RAM Size%></td><td > <%=luci.sys.exec("free -m  | grep Mem | awk '{print $2/1024}'|  awk -F '.' '{print $1}'").."MB"%></td></tr>
+        <tr><td width="33%"><%:内存大小%></td><td > <%=luci.sys.exec("free -m  | grep Mem | awk '{print $2/1024}'|  awk -F '.' '{print $1}'").."MB"%></td></tr>
 		<tr><td width="33%"><%:Firmware Version%></td><td>
 			<%=pcdata(ver.distname)%> <%=pcdata(ver.distversion)%>
 		</td></tr>
