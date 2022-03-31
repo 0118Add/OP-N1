@@ -21,8 +21,8 @@ git clone https://github.com/fw876/helloworld.git package/helloworld
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
 #添加额外软件包
-#rm -rf package/lean/autocore
-#svn co https://github.com/0118Add/OpenWrt-CI/trunk/x86/autocore package/lean/autocore
+rm -rf package/lean/autocore
+git clone https://github.com/0118Add/myautocore.git package/myautocore
 rm -rf feeds/luci/collections/luci-lib-docker
 rm -rf feeds/luci/applications/luci-app-dockerman
 git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
@@ -83,7 +83,7 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-sfe/po/zh-cn/sfe.po
 #sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' package/lean/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
 sed -i 's/Docker CE 容器/Docker容器/g' feeds/luci/applications/luci-app-docker/po/zh-cn/docker.po
-sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
+#sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
 #调整 Dockerman 到 服务菜单
 #sed -i 's/"admin",/"admin","services",/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/controller/*.lua
 #sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/model/*.lua
@@ -102,7 +102,7 @@ sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-f
 echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/config/firewall/files/firewall.user
 
 # 替换index.htm文件
-wget -O ./package/lean/autocore/files/arm/index.htm https://raw.githubusercontent.com/0118Add/OP-N1/main/n1_index.htm
+#wget -O ./package/lean/autocore/files/arm/index.htm https://raw.githubusercontent.com/0118Add/OP-N1/main/n1_index.htm
 
 # 替换banner
 wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/Armbian/main/router/Openwrt_N1/diy/n1_lede/banner
