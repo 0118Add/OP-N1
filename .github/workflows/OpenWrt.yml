@@ -1,4 +1,4 @@
-name: ARMv8_FOL+SFE
+name: Build OpenWrt
 
 on:
   repository_dispatch:
@@ -13,7 +13,7 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: aarch64/ceshi.config
+  CONFIG_FILE: aarch64/lede.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   MRG_ADD_SH: aarch64/ARMv8.sh
@@ -25,7 +25,7 @@ env:
   UPLOAD_FIRMWARE: false
   TZ: Asia/Shanghai
   FILE_NAME: Files4Build
-  PRODUCT_NAME: ARMv8_FOL+SFE
+  PRODUCT_NAME: ARMv8_FOL
 jobs:
   build:
     runs-on: ubuntu-18.04
@@ -166,22 +166,29 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Create release
-      id: release
-      uses: ncipollo/release-action@v1
-      with:
-        name: R${{ env.DATE }}
-        allowUpdates: true
-        tag: ${{ env.FILE_NAME }}
-        commit: main
-        token: ${{ secrets.RELEASES_TOKEN }}
-        body: |
-          ARMv8系列设备打包用临时固件，不可直刷
-          直刷固件参见下方tag名为ARMv8的release
-          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
-          ${{ env.useVersionInfo }}
-        artifacts: ${{ env.FIRMWARE }}/*
+    - name: Generate release tag
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
+        touch release.txt
+        [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        echo "::set-output name=status::success"
     
-#    - name: WeChat notification
-#      if: steps.organize.outputs.status == 'success' && !cancelled()
-#      run: curl https://sc.ftqq.com/${{ secrets.ServerChan }}.send?text=${{ env.PRODUCT_NAME }}编译完成
+    - name: Upload firmware to release
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+        files: ${{ env.FIRMWARE }}/*
+
+  over:
+    needs: [build]
+    runs-on: ubuntu-20.04
+    steps:
+    - name: TG notification #TG推送
+      run: curl "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=主人，ARM64系统的rootfs文件编译以完成，可以开始打包了。"
