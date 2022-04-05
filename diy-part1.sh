@@ -13,10 +13,4 @@
 
 # Add a feed source
 #sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
-rm -rf feeds/luci/collections/luci-app-accesscontrol
-rm -rf feeds/luci/collections/luci-app-ddns
-rm -rf feeds/luci/collections/luci-app-nlbwmon
-rm -rf feeds/luci/collections/luci-app-unblockmusic
-rm -rf feeds/luci/collections/luci-app-vlmcsd
-rm -rf feeds/luci/collections/luci-app-vsftpd
-rm -rf feeds/luci/collections/luci-app-wol
+
