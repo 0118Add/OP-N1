@@ -100,14 +100,14 @@ jobs:
         sudo ./mk_s905d_n1.sh
         sudo ./mk_s905d_n1_plus.sh
         sudo ./mk_s905d_n1_plusplus.sh
-        sudo ./mk_s905d_n1_plusplusplus.sh
+        #sudo ./mk_s905d_n1_plusplusplus.sh
         #sudo ./mk_s905x2_x96max.sh
         #sudo ./mk_s905x2_x96max_plus.sh
         #sudo ./mk_s905x2_x96max_plusplus.sh
         sudo ./mk_s905x3_multi.sh
         sudo ./mk_s905x3_multi_plus.sh
         sudo ./mk_s905x3_multi_plusplus.sh
-        sudo ./mk_s905x3_multi_plusplusplus.sh
+        #sudo ./mk_s905x3_multi_plusplusplus.sh
         #sudo ./mk_s912_zyxq.sh
         #sudo ./mk_s912_zyxq_plus.sh
         #sudo ./mk_s912_zyxq_plusplus.sh
