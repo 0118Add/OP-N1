@@ -14,7 +14,7 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 #使用源码自带ShadowSocksR Plus+出国软件
 #sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
 #sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.default
-git clone https://github.com/fw876/helloworld.git package/helloworld
+#git clone https://github.com/fw876/helloworld.git package/helloworld
 #sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
@@ -23,10 +23,12 @@ git clone https://github.com/fw876/helloworld.git package/helloworld
 #添加额外软件包
 rm -rf package/lean/autocore
 git clone https://github.com/0118Add/myautocore.git package/myautocore
+rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/collections/luci-lib-docker
 rm -rf feeds/luci/applications/luci-app-dockerman
 git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-netdata package/luci-app-netdata
 
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/hysteria package/hysteria
@@ -51,10 +53,14 @@ git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dock
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/tcping package/tcping
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
-git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
-rm -rf feeds/luci/themes/luci-theme-argon
+git clone -b luci https://github.com/xiaorouji/openwrt-passwall.git package/passwall
+#git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
+svn co https://github.com/sirpdboy/build/trunk/pass package/pass
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
+git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
+git clone https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
 #git clone https://github.com/leshanydy2022/luci-theme-bootstrap-mod.git package/luci-theme-bootstrap-mod
+rm -rf feeds/luci/themes/luci-theme-argon
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
 #svn co https://github.com/siropboy/mypackages/trunk/luci-app-autopoweroff package/openwrt-packages/luci-app-autopoweroff
@@ -69,7 +75,7 @@ git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #git clone https://github.com/bin20088/luci-app-koolproxy.git package/openwrt-packages/luci-app-koolproxy
 #git clone https://github.com/bin20088/luci-app-koolddns.git package/openwrt-packages/luci-app-koolddns
 #git clone https://github.com/QiuSimons/openwrt-mos.git package/luci-app-mosdns
-git clone https://github.com/vernesong/OpenClash.git package/OpenClash
+svn co https://github.com/vernesong/OpenClash/branches/dev/luci-app-openclash package/luci-app-openclash
 #git clone https://github.com/small-5/luci-app-adblock-plus.git package/luci-app-adblock-plus
 git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
@@ -79,11 +85,11 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-gost package/lean/luci-app-gost
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gost package/lean/gost
 
-#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-flowoffload/po/zh-cn/flowoffload.po
-#sed -i 's/"Turbo ACC 网络加速"/"网络加速"/g' package/lean/luci-app-sfe/po/zh-cn/sfe.po
+sed -i 's/ShadowSocksR Plus++/SSR Plus++/g' package/pass/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 #sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' package/lean/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
-sed -i 's/Docker CE 容器/Docker容器/g' feeds/luci/applications/luci-app-docker/po/zh-cn/docker.po
+#sed -i 's/Docker CE 容器/Docker容器/g' feeds/luci/applications/luci-app-docker/po/zh-cn/docker.po
 #sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
+
 #调整 Dockerman 到 服务菜单
 #sed -i 's/"admin",/"admin","services",/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/controller/*.lua
 #sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/model/*.lua
