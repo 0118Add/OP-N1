@@ -55,8 +55,8 @@ svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-netdata packag
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
 git clone -b luci https://github.com/xiaorouji/openwrt-passwall.git package/passwall
-#git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
-svn co https://github.com/sirpdboy/build/trunk/pass package/pass
+git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
+#svn co https://github.com/sirpdboy/build/trunk/pass package/pass
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
 git clone https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
@@ -86,7 +86,7 @@ git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-gost package/lean/luci-app-gost
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gost package/lean/gost
 
-sed -i 's/ShadowSocksR Plus++/SSR Plus++/g' package/pass/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
+#sed -i 's/ShadowSocksR Plus++/SSR Plus++/g' package/pass/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 #sed -i 's/"解锁网易云灰色歌曲"/"网易云音乐"/g' package/lean/luci-app-unblockmusic/po/zh-cn/unblockmusic.po
 #sed -i 's/Docker CE 容器/Docker容器/g' feeds/luci/applications/luci-app-docker/po/zh-cn/docker.po
 #sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
