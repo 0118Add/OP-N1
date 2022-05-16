@@ -22,8 +22,8 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 
 #添加额外软件包
 rm -rf package/lean/autocore
-git clone https://github.com/0118Add/myautocore.git package/myautocore
-#git clone https://github.com/0118Add/Overwall.git package/myautocore
+#git clone https://github.com/0118Add/myautocore.git package/myautocore
+git clone https://github.com/0118Add/Overwall.git package/myautocore
 rm -rf feeds/luci/applications/luci-app-netdata
 rm -rf feeds/luci/collections/luci-lib-docker
 rm -rf feeds/luci/applications/luci-app-dockerman
